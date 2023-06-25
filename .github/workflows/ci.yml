@@ -41,8 +41,11 @@ jobs:
         sudo mv migrate /usr/bin/
         which migrate
 
+    - name: Down Migration
+      run: make migratedown
+
     - name: Run Migration
-      run: migrate -path db/migration -database "postgresql://root:password@localhost:5432/simple_bank?sslmode=disable" -verbose up
+      run: make migrateup
 
     - name: Test
-      run: go test -v -cover ./...
+      run: make test
