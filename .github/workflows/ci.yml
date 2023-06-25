@@ -14,7 +14,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12
+        image: postgres:12-alpine
         env:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: password
@@ -32,17 +32,16 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
-        go-version: ^1.20
-      id: go
+        go-version: ^1.19
+      
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
 
     - name: Install Golang-Migrate
       run: | 
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz
         sudo mv migrate /usr/bin/
         which migrate
-
-    - name: Down Migration
-      run: make migratedown
 
     - name: Run Migration
       run: make migrateup
