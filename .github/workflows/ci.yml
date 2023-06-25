@@ -42,7 +42,7 @@ jobs:
         which migrate
 
     - name: Run Migration
-      run: make migrateup
+        run: migrate -path db/migration -database "postgresql://root:password@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
     - name: Test
-      run: make test
+        run: go test -v -cover ./...
