@@ -6,16 +6,15 @@ import (
 
 	"github.com/NopparootSuree/Learning-GO/api"
 	db "github.com/NopparootSuree/Learning-GO/db/sqlc"
-)
-
-const (
-	dbDriver      = "postgres"
-	dbSource      = "postgresql://root:password@localhost:5432/simple_bank?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
+	"github.com/NopparootSuree/Learning-GO/utils"
 )
 
 func main() {
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := utils.LoadCongfig(".")
+	if err != nil {
+		log.Fatal("Can't load config:", err)
+	}
+	conn, err := sql.Open(config.DBDRIVER, config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
@@ -23,7 +22,7 @@ func main() {
 	store := db.NewStore(conn)
 	server := api.NewServer(store)
 
-	err = server.Start(serverAddress)
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("Can't start server:", err)
 	}
