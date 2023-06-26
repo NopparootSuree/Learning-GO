@@ -79,6 +79,7 @@ func TestUpdateTransfer(t *testing.T) {
 }
 
 func TestListTransfer(t *testing.T) {
+	//for loop createTransfers
 	for i := 0; i < 5; i++ {
 		createRandomTransfer(t)
 	}
